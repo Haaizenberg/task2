@@ -20,13 +20,17 @@ void Widget::on_Search_button_clicked()
     QStringList words = input_string.split(' ', QString::SkipEmptyParts);
 
     words.sort();
-
     int i = 0;
-    while (i !=  words.count() - 1) {
-        if (words[i] != words[i+1])
-            ui->result_list->append(QString("%1 - %2").arg(words[i]).arg(input_string.count(words[i], Qt::CaseInsensitive)));
+    int k = 1;
+    while (i !=  words.count()-1) {
+        if (words[i] == words[i+1])
+            k++;
+        else if (words[i] != words[i+1]) {
+            ui->result_list->append(QString("%1 - %2").arg(words[i]).arg(k));
+            k = 1;
+        }
         i++;
     }
     i =  words.count() - 1;
-    ui->result_list->append(QString("%1 - %2").arg(words[i]).arg(input_string.count(words[i]), Qt::CaseInsensitive));
+    ui->result_list->append(QString("%1 - %2").arg(words[i]).arg(k));
 }
